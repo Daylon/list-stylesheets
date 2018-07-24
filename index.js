@@ -11,7 +11,8 @@ function replaceCodeBlock(html, re, block) {
 }
 
 module.exports = function (html, options) {
-    var results = {},
+    var stringHtml = '',
+        results = {},
         codeBlocks = {
             EJS: { start: '<%', end: '%>' },
             HBS: { start: '{{', end: '}}' }
@@ -49,7 +50,8 @@ module.exports = function (html, options) {
         },
         $;
 
-    $ = cheerio.load(encodeEntities(html), extend({
+    stringHtml = html.toString('utf8');
+    $ = cheerio.load(encodeEntities(stringHtml), extend({
         decodeEntities: false
     }, pick(options, [
         'xmlMode',
